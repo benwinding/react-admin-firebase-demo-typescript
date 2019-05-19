@@ -1,26 +1,36 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { PostList, PostShow, PostCreate, PostEdit } from "./posts";
+import { Admin, Resource } from "react-admin";
+import {
+  FirebaseRealTimeSaga,
+  FirebaseDataProvider,
+  FirebaseAuthProvider
+} from "react-admin-firebase";
 
-class App extends Component {
+const config = require("./FIREBASE_CONFIG.js").firebaseConfig;
+
+const dataProvider = FirebaseDataProvider(config);
+const options = {
+  observe: ["posts"]
+};
+const firebaseRealtime = FirebaseRealTimeSaga(dataProvider, options);
+
+class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Admin
+        customSagas={[firebaseRealtime]}
+        dataProvider={dataProvider}
+        authProvider={FirebaseAuthProvider}
+      >
+        <Resource
+          name="posts"
+          list={PostList}
+          show={PostShow}
+          create={PostCreate}
+          edit={PostEdit}
+        />
+      </Admin>
     );
   }
 }
