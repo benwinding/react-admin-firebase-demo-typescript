@@ -4,16 +4,18 @@ import { Admin, Resource } from "react-admin";
 import {
   FirebaseRealTimeSaga,
   FirebaseDataProvider,
-  FirebaseAuthProvider
+  FirebaseAuthProvider,
+  RAFirebaseOptions
 } from "react-admin-firebase";
 
 const config = require("./FIREBASE_CONFIG.js").firebaseConfig;
 
-const dataProvider = FirebaseDataProvider(config);
-const options = {
-  observe: ["posts"]
+const options: RAFirebaseOptions = {
+  watch: ["posts"] 
 };
+const dataProvider = FirebaseDataProvider(config, options);
 const firebaseRealtime = FirebaseRealTimeSaga(dataProvider, options);
+const authProvider = FirebaseAuthProvider(dataProvider, options);
 
 class App extends React.Component {
   render() {
@@ -21,7 +23,7 @@ class App extends React.Component {
       <Admin
         customSagas={[firebaseRealtime]}
         dataProvider={dataProvider}
-        authProvider={FirebaseAuthProvider}
+        authProvider={authProvider}
       >
         <Resource
           name="posts"
