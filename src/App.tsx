@@ -11,11 +11,13 @@ import {
 const config = require("./FIREBASE_CONFIG.js").firebaseConfig;
 
 const options: RAFirebaseOptions = {
-  watch: ["posts"] 
-};
+  logging: true,
+  rootRef: 'root_collection/some_document',
+  watch: ["posts"]
+}
 const dataProvider = FirebaseDataProvider(config, options);
+const authProvider = FirebaseAuthProvider(config, options);
 const firebaseRealtime = FirebaseRealTimeSaga(dataProvider, options);
-const authProvider = FirebaseAuthProvider(dataProvider, options);
 
 class App extends React.Component {
   render() {
