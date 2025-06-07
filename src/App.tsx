@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PostList, PostShow, PostCreate, PostEdit } from "./posts";
+import { VideoList, VideoShow, VideoCreate, VideoEdit } from "./videos";
 import { Admin, Resource } from "react-admin";
 import {
   FirebaseDataProvider,
@@ -25,10 +25,10 @@ class App extends React.Component {
       <Admin dataProvider={dataProvider} authProvider={authProvider}>
         <Resource
           name="videos"
-          list={PostList}
-          show={PostShow}
-          create={PostCreate}
-          edit={PostEdit}
+          list={VideoList}
+          show={VideoShow}
+          create={VideoCreate}
+          edit={VideoEdit}
         />
       </Admin>
     );
