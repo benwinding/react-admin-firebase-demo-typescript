@@ -6,13 +6,15 @@ import {
   FirebaseAuthProvider,
   RAFirebaseOptions
 } from "react-admin-firebase";
-
+//import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 const config = require("./FIREBASE_CONFIG.js").firebaseConfig;
 
 const options: RAFirebaseOptions = {
   logging: true,
-  rootRef: "root_collection/some_document",
-  watch: ["posts"]
+  // rootRef: "default",
+  watch: ["videos"]
 };
 const dataProvider = FirebaseDataProvider(config, options);
 const authProvider = FirebaseAuthProvider(config, options);
@@ -22,7 +24,7 @@ class App extends React.Component {
     return (
       <Admin dataProvider={dataProvider} authProvider={authProvider}>
         <Resource
-          name="posts"
+          name="videos"
           list={PostList}
           show={PostShow}
           create={PostCreate}
